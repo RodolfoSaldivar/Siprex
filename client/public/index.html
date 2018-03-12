@@ -43,7 +43,31 @@
     <!-- Import jQuery before materialize.js -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="./js/pickadate_default.js"></script>
+    <script type="text/javascript">
+      $.extend($.fn.pickadate.defaults,
+      { 
+        container: 'body',
+        today: "Hoy",
+        clear: "",
+        close: "Listo",
+        labelMonthNext: "Siguiente mes",
+        labelMonthPrev: "Mes anterior",
+        labelMonthSelect: "Seleccione mes",
+        labelYearSelect: "Seleccione año",
+        selectMonths: true,
+        selectYears: true,
+        showMonthsShort: false,
+        showWeekdaysFull: true,
+        monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        weekdaysFull: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        weekdaysShort: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'],
+        format: 'dd/mm/yyyy',
+        formatSubmit: 'dd/mm/yyyy',
+        firstDay: 1,
+        min: -31
+      });
+    </script>
     <!-- And then your bundled js -->
     <!-- <script src="path/to/your/bundle.js"></script> -->
   </body>
