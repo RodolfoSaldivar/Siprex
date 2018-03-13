@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Modal, Table, Button, Icon } from 'react-materialize';
-import { submit } from 'redux-form';
+import { Row, Col, Modal, Table, Button } from 'react-materialize';
 import { connect } from 'react-redux';
 import { traerEmpresas } from '../../actions';
 
-import Guardar from './Guardar';
+import GuardarEmpresa from './GuardarEmpresa';
 
 class Empresas extends Component
 {
@@ -18,21 +17,10 @@ class Empresas extends Component
 		return this.props.empresas.reverse().map((empresa) =>
 		(
 			<tr key={empresa._id}>
-				<td>
-					<div className="border_top" />
-					nombre
-				</td>
-				<td>
-					<div className="border_top" />
-					10
-				</td>
-				<td>
-					<div className="border_top" />
-					11/04/2022
-				</td>
-				<td>
-					<Button waves='light'>Escoger</Button>
-				</td>
+				<td><div className="border_top" />{ empresa.nombre }</td>
+				<td><div className="border_top" />{ empresa.usuarios }</td>
+				<td><div className="border_top" />{ empresa.fecha_corte }</td>
+				<td className="center"><Button waves='light'>Escoger</Button></td>
 				<td className="center">
 					<div className="switch" id="cambiame_VFZFOVBRPT0">
 						<label>
@@ -44,14 +32,14 @@ class Empresas extends Component
 					</div>
 				</td>
 				<td className="valign">
-					<Modal header='Guardar Empresa'
+					<Modal header='GuardarEmpresa Empresa'
 						trigger={
 							<a className="pointer">
 								<i className="material-icons">edit</i>
 							</a>
 						}
 					>
-						<Guardar />
+						<GuardarEmpresa />
 					</Modal>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<Modal header='Modal Header'
@@ -78,19 +66,7 @@ class Empresas extends Component
 						<h4 className="valign">
 							EMPRESAS
 							&nbsp;
-							<Modal header='Guardar Empresa'
-								trigger={<Button floating large waves='light' icon='add' />}
-								actions={
-									<div>
-										<Button className="modal-close" waves='light'>Cerrar</Button>
-										<Button waves='light'
-											onClick={() => document.getElementById('empresaForm').dispatchEvent(new Event('submit'))}
-										>Guardar</Button>
-									</div>
-								}
-							>
-								<Guardar />
-							</Modal>
+							<GuardarEmpresa />
 						</h4>
 					</Col>
 					<Col s={6}>
@@ -110,7 +86,6 @@ class Empresas extends Component
 									<th></th>
 								</tr>
 							</thead>
-
 							<tbody>
 								{ this.ponerFilas() }
 							</tbody>

@@ -1,7 +1,7 @@
 import { reduxForm, Field, reset } from 'redux-form';
-import { Row, Col } from 'react-materialize'
+import { Row, Col, Button, Modal } from 'react-materialize'
 import * as actions from'../../actions';
-import InputForma from './InputForma';
+import InputForma from '../InputForma';
 import { connect } from 'react-redux';
 import React from 'react';
 import _ from 'lodash';
@@ -15,7 +15,7 @@ const camposForma = [
 ];
 
 //----> Empieza el componente
-const Guardar = ({ submitEmpresa, handleSubmit }) =>
+const GuardarEmpresa = ({ submitEmpresa, handleSubmit }) =>
 {
 	const cargarCampos = (casilla) =>
 	{
@@ -33,25 +33,37 @@ const Guardar = ({ submitEmpresa, handleSubmit }) =>
 	}
 
 	return (
-		<form id="empresaForm" onSubmit={handleSubmit((values) => submitEmpresa(values))}>
-			<div style={{marginTop: "60px"}} />
-			<Row>
-				<Col s={12} m={6}>
-					{ cargarCampos(0) }
-				</Col>
-				<Col s={12} m={6}>
-					{ cargarCampos(1) }
-				</Col>
-			</Row>
-			<Row>
-				<Col s={12} m={6}>
-					{ cargarCampos(2) }
-				</Col>
-				<Col s={12} m={6}>
-					{ cargarCampos(3) }
-				</Col>
-			</Row>
-		</form>
+		<Modal header='Guardar Empresa'
+			trigger={<Button floating large waves='light' icon='add' />}
+			actions={
+				<div>
+					<Button className="modal-close" waves='light'>Cerrar</Button>
+					<Button waves='light'
+						onClick={ handleSubmit((values) => submitEmpresa(values)) }
+					>Guardar</Button>
+				</div>
+			}
+		>
+			<form id="empresaForm">
+				<div style={{marginTop: "60px"}} />
+				<Row>
+					<Col s={12} m={6}>
+						{ cargarCampos(0) }
+					</Col>
+					<Col s={12} m={6}>
+						{ cargarCampos(1) }
+					</Col>
+				</Row>
+				<Row>
+					<Col s={12} m={6}>
+						{ cargarCampos(2) }
+					</Col>
+					<Col s={12} m={6}>
+						{ cargarCampos(3) }
+					</Col>
+				</Row>					
+			</form>
+		</Modal>
 	);
 }
 
@@ -78,5 +90,4 @@ export default reduxForm({
 	validate,
 	form: 'empresaForm',
 	onSubmitSuccess: (result, dispatch) => dispatch(reset('empresaForm'))
-})
-(connect(mapStateToProps, actions)(Guardar));
+})(connect(mapStateToProps, actions)(GuardarEmpresa));
