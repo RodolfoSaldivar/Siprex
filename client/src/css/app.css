@@ -37,6 +37,10 @@ body {
 //----> Siprex
 */
 
+.modal .modal-footer {
+    height: 64px;
+}
+
 
 
 /*
@@ -341,7 +345,7 @@ textarea.para_escribir {
 }
 
 .btn:disabled {
-    border: none;
+    border: none !important;
 }
 
 .btn:hover, .btn-large:hover, button:focus, .btn:focus, #btn_modal_apu {

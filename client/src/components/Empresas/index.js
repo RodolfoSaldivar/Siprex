@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Modal, Table, Button } from 'react-materialize';
 import { connect } from 'react-redux';
-import { traerEmpresas } from '../../actions';
+import * as empresasActions from '../../actions/empresasActions';
 
 import GuardarEmpresa from './GuardarEmpresa';
 
@@ -58,7 +58,6 @@ class Empresas extends Component
 
 	render()
 	{
-		console.log(this.props.empresas);
 		return (
 			<div>
 				<Row className="margin_nada valign">
@@ -97,9 +96,9 @@ class Empresas extends Component
 	}
 }
 
-function mapStateToProps({ empresas })
+function mapStateToProps({ empresasReducer: {empresas} })
 {
 	return { empresas };
 }
 
-export default connect(mapStateToProps, { traerEmpresas })(Empresas);
+export default connect(mapStateToProps, empresasActions)(Empresas);

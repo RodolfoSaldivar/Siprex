@@ -1,9 +1,9 @@
 import { reduxForm, Field, reset } from 'redux-form';
-import { Row, Col, Button, Modal } from 'react-materialize'
-import * as actions from'../../actions';
+import { Row, Col, Button, Modal, Preloader } from 'react-materialize'
+import * as empresasActions from'../../actions/empresasActions';
 import InputForma from '../InputForma';
 import { connect } from 'react-redux';
-import React from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 
 //----> Los campos que la forma tiene con sus respectivos atributos
@@ -15,7 +15,7 @@ const camposForma = [
 ];
 
 //----> Empieza el componente
-const GuardarEmpresa = ({ submitEmpresa, handleSubmit }) =>
+const GuardarEmpresa = ({ submitEmpresa, handleSubmit, loading, error }) =>
 {
 	const cargarCampos = (casilla) =>
 	{
@@ -36,11 +36,14 @@ const GuardarEmpresa = ({ submitEmpresa, handleSubmit }) =>
 		<Modal header='Guardar Empresa'
 			trigger={<Button floating large waves='light' icon='add' />}
 			actions={
-				<div>
-					<Button className="modal-close" waves='light'>Cerrar</Button>
-					<Button waves='light'
+				<div className="valign right">
+					<Preloader size="small" className={ (loading) ? "" : "hide" } />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<Button waves='light' disabled={ loading }
 						onClick={ handleSubmit((values) => submitEmpresa(values)) }
 					>Guardar</Button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<Button className="modal-close" waves='light' disabled={ loading }>Cerrar</Button>
 				</div>
 			}
 		>
@@ -61,7 +64,7 @@ const GuardarEmpresa = ({ submitEmpresa, handleSubmit }) =>
 					<Col s={12} m={6}>
 						{ cargarCampos(3) }
 					</Col>
-				</Row>					
+				</Row>			
 			</form>
 		</Modal>
 	);
@@ -80,14 +83,20 @@ function validate(values)
 }
 
 //----> Con esta funcion hacemos que tenga acceso al action creator de submit empresa
-const mapStateToProps = ({ submitEmpresa }) =>
+const mapStateToProps = ({ empresasReducer: { loading, error } }) =>
 {
-	return { submitEmpresa };
+	return { loading, error };
+};
+
+const submitSucces = (dispatch) =>
+{
+	dispatch(reset('empresaForm'));
+
 };
 
 //----> Primero conectamos con reduxForm y despues con los action creators
 export default reduxForm({
 	validate,
 	form: 'empresaForm',
-	onSubmitSuccess: (result, dispatch) => dispatch(reset('empresaForm'))
-})(connect(mapStateToProps, actions)(GuardarEmpresa));
+	onSubmitSuccess: (result, dispatch) => submitSucces(dispatch)
+})(connect(mapStateToProps, empresasActions)(GuardarEmpresa));

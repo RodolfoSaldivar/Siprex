@@ -4,5 +4,5 @@ import empresasReducer from './empresasReducer';
 
 export default combineReducers({
 	form: reduxForm,
-	empresas: empresasReducer
+	empresasReducer
 });
